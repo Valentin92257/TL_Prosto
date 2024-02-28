@@ -53,4 +53,5 @@ class RepositoryModule {
 
     @Provides
     fun provideOffersRepository(api: Api<OffersApi>,preferences: PreferencesStorage): OffersRepository = OffersRepositoryImpl(api.provide(),preferences)
+
 }
