@@ -66,8 +66,8 @@
     <EditText
         android:id="@+id/email_body"
         android:layout_width="0dp"
-        android:minLines="15"
-        android:layout_height="wrap_content"
+        android:layout_height="204dp"
+
         android:layout_marginTop="168dp"
         android:gravity="start"
         android:background="@drawable/rectangle"

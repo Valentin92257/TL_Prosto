@@ -6,9 +6,13 @@ import com.touchin.prosto.base.viewmodel.navigateUp
 import com.touchin.prosto.util.EmailUtil
 import com.touchin.prosto.util.sendEmail
 import javax.inject.Inject
+import com.touchin.data.repository.common.PreferencesStorage
+import com.touchin.domain.repository.common.PreferenceRepository
+import com.touchin.domain.repository.offers.OffersRepository
 
 class SupportViewModel @Inject constructor(
     private val context: Context,
+    private val preferenceRepository: PreferenceRepository
 ) : BaseContentViewModel<SupportState>(
     initState = SupportState()
 ), SupportController {
@@ -18,9 +22,9 @@ class SupportViewModel @Inject constructor(
 
         sendEmail(
             context = context,
-            subject = state.emailSubject, // TODO необходимо изменить в рамках задачи
+            subject = state.emailSubject,
             email = state.emailText,
-            body = state.emailBody // TODO необходимо изменить в рамках задачи
+            body = state.emailBody
         )
     }
 
@@ -40,4 +44,12 @@ class SupportViewModel @Inject constructor(
 
     override fun onBackClicked() = _navigationEvent.navigateUp()
 
+    override fun onCleared() {
+        if ( state.emailBody.isNotBlank() || state.emailSubject.isNotBlank() || state.emailBody.isNotBlank()){
+            preferenceRepository.setEmail()
+            preferenceRepository.setBody()
+            preferenceRepository.setSubject()
+        }
+        super.onCleared()
+    }
 }
