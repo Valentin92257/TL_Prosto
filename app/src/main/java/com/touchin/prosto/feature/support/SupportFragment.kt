@@ -21,11 +21,15 @@ class SupportFragment :
         binding.toolbar.setBackClickListener(controller::onBackClicked)
         binding.sendButton.scaleAnimationOnClick { controller.onSendClicked() }
         binding.emailInput.afterTextChanged(controller::onEmailChanged)
+        binding.emailSubject.afterTextChanged(controller::onSubjectChanged)
+        binding.emailBody.afterTextChanged(controller::onBodyChanged)
     }
 
     override fun render(state: SupportState, controller: SupportController) {
         binding.sendButton.isEnabled = state.sendButtonEnable
         binding.emailInput.showError(state.hasEmailError, R.string.common_email_error)
+        binding.emailSubject.showError(state.hasSubjectError, R.string.common_symbols_error)
+        binding.emailBody.showError(state.hasBodyError, R.string.common_symbols_error)
     }
 
     private fun EditText.afterTextChanged(action: (String) -> Unit) {
