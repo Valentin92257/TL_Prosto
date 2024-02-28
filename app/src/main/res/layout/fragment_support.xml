@@ -47,7 +47,41 @@
         android:layout_marginTop="64dp"
         android:hint="@string/common_email"
         android:inputType="textEmailAddress"
-        tools:text="text"/>
+        tools:text="email"/>
+
+    <EditText
+        android:id="@+id/email_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:hint="@string/common_subject"
+        android:inputType="textEmailSubject"
+        android:textAppearance="@style/Caption16"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="subject" />
+
+    <EditText
+        android:id="@+id/email_body"
+        android:layout_width="0dp"
+        android:minLines="15"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
+        android:gravity="start"
+        android:background="@drawable/rectangle"
+        android:hint="@string/common_body"
+        android:drawablePadding="5dp"
+        android:inputType="textMultiLine"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
+        android:textAppearance="@style/Caption16"
+        app:layout_constraintEnd_toEndOf="@id/end_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/start_guideline"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="body" />
 
     <com.touchin.prosto.view.BaseButton
         android:id="@+id/sendButton"

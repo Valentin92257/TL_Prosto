@@ -1,5 +1,6 @@
 package com.touchin.prosto.feature.detail
 
+import android.graphics.Color
 import androidx.navigation.fragment.navArgs
 import com.anadolstudio.core.viewbinding.viewBinding
 import com.touchin.prosto.R
@@ -7,6 +8,7 @@ import com.touchin.prosto.base.bottom.BaseContentBottom
 import com.touchin.prosto.base.fragment.BaseContentFragment
 import com.touchin.prosto.databinding.FragmentOfferDetailBinding
 import com.touchin.prosto.di.viewmodel.assistedViewModel
+import com.touchin.prosto.util.GradientDrawable
 
 @Suppress("TooManyFunctions")
 class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewModel, OfferDetailController>(
@@ -23,7 +25,15 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
     }
 
     override fun render(state: OfferDetailState, controller: OfferDetailController) {
-        binding.mainInfo.initView(state.offer)
-        binding.offerName.setText(R.string.app_name) // TODO
+        with(binding){
+            mainInfo.initView(state.offer)
+            headerView.initView(state.offer, {})
+            offerName.text = state.offer.companyName
+            longDescription.text = state.offer.longDescription
+            gradientBackground.background = GradientDrawable(
+                firstColor = state.offer.backgroundFirstColor,
+                secondColor = state.offer.backgroundSecondColor,
+            )
+        }
     }
 }

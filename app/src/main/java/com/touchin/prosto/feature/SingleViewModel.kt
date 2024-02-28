@@ -14,7 +14,6 @@ class SingleViewModel @Inject constructor(
             .smartSubscribe(
                 onSuccess = {
                     showEvent(SingleEvents.ChangeNightModeEvent(it))
-                    showTodo() // TODO удалить, когда будет настроена темная тема
                 },
                 onError = this::showError
             )
