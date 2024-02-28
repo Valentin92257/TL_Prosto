@@ -26,14 +26,15 @@ class OfferListViewModel @Inject constructor(
 ), OfferListController {
 
     init {
+
         loadOffers()
     }
 
     private fun loadOffers() {
         lceFlow { emit(offersRepository.getOfferList()) }
-            .mapLceContent { offers -> offers.map { it.toUi(isFavorite = false) } }
+            .mapLceContent { offers -> offers.map { it.toUi(isFavorite = offersRepository.getFavoriteSet().contains(it.id)) } }
             .onEach { updateState { copy(loadingState = it) } }
-            .onEachContent { offers -> updateState { copy(offersList = offers) } }
+            .onEachContent { offers ->updateState { copy(offersList = offers,isFavoritesAvailable =offersRepository.getFavoriteSet().isNotEmpty()) } }
             .onEachError { showError(it) }
             .launchIn(viewModelScope)
     }
@@ -45,7 +46,34 @@ class OfferListViewModel @Inject constructor(
         args = bundleOf(context.getString(R.string.navigation_offer) to offerUi)
     )
 
-    override fun onFavoriteChecked(offerUi: OfferUi) = showTodo()
 
-    override fun onFavoriteFilterClicked() = showTodo()
+    override fun onFavoriteChecked(offerUi: OfferUi) {
+        val favoritesSet: HashSet<String> = offersRepository.getFavoriteSet()
+        if (!favoritesSet.contains(offerUi.id))
+            favoritesSet.add(offerUi.id)
+        else
+            favoritesSet.remove(offerUi.id)
+
+        offersRepository.setFavoriteSet(favoritesSet)
+
+        val newOffersList = state.offersList.toMutableList().map {
+            if (offerUi.id == it.id) {
+                it.copy(isFavorite = !offerUi.isFavorite)
+            } else {
+                it
+            }
+        }
+        val FavoritesNotEmpty = offersRepository.getFavoriteSet().isNotEmpty()
+        updateState {
+            copy(
+                offersList = newOffersList, isFavoritesAvailable = FavoritesNotEmpty,
+                isFavoriteFilter = if (FavoritesNotEmpty)
+                    isFavoriteFilter else !isFavoriteFilter
+            )
+        }
+    }
+
+    override fun onFavoriteFilterClicked() {
+        updateState { copy(isFavoriteFilter = !isFavoriteFilter,isFavoritesAvailable =offersRepository.getFavoriteSet().isNotEmpty())}
+    }
 }
