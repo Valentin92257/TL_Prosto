@@ -24,6 +24,8 @@ class OfferDetailFragment : BaseContentBottom<OfferDetailState, OfferDetailViewM
 
     override fun render(state: OfferDetailState, controller: OfferDetailController) {
         binding.mainInfo.initView(state.offer)
-        binding.offerName.setText(R.string.app_name) // TODO
+        binding.headerView.initView(state.offer, {})
+        binding.offerName.text = state.offer.companyName
+        binding.longDescription.text = state.offer.longDescription
     }
 }
