@@ -19,4 +19,16 @@ class PreferenceRepositoryImpl(private val preferencesStorage: PreferencesStorag
         return preferencesStorage.bodyDraft
     }
 
+    override fun setEmail(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSubject(): String {
+        TODO("Not yet implemented")
+    }
+
+    override fun setBody(): String {
+        TODO("Not yet implemented")
+    }
+
 }
