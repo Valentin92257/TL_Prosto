@@ -1,5 +1,6 @@
 package com.touchin.prosto.feature.list
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.anadolstudio.core.viewbinding.viewBinding
 import com.touchin.prosto.R
@@ -10,11 +11,11 @@ import com.touchin.prosto.feature.model.OfferUi
 import com.touchin.prosto.util.postUpdate
 import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Section
-import okhttp3.internal.notify
 
 class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel, OfferListController>(
     R.layout.fragment_offer_list
 ) {
+
 
     private val binding by viewBinding { FragmentOfferListBinding.bind(it) }
     private val offersSection = Section()
@@ -36,7 +37,8 @@ class OfferListFragment : BaseContentFragment<OfferListState, OfferListViewModel
     }
 
     override fun render(state: OfferListState, controller: OfferListController) {
-        offersSection.postUpdate(binding.recycler, state.offersList.map { createOfferHolder(it) })
+        offersSection.postUpdate(binding.recycler, state.favoritesList.map { createOfferHolder(it) })
+        binding.favoriteButton.isVisible = state.isFavoritesAvailable
     }
 
     protected fun createOfferHolder(offer: OfferUi): BigOfferCardHolder = BigOfferCardHolder(
